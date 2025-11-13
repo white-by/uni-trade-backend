@@ -11,7 +11,13 @@ spring:
 
 # mybatis映射
 mybatis-plus:
+  mapper-locations: classpath*:com/sysu/mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

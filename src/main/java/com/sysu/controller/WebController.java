@@ -3,7 +3,6 @@ package com.sysu.controller;
 import com.sysu.common.Result;
 import com.sysu.service.AddressService;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

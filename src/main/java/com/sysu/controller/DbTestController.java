@@ -1,6 +1,6 @@
 package com.sysu.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @RestController
 public class DbTestController {
 
-    @Autowired
+    @Resource
     private DataSource dataSource;
 
     @GetMapping("/db-test")
