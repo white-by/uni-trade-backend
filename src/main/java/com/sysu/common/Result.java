@@ -1,6 +1,5 @@
 package com.sysu.common;
 
-import com.sysu.common.config.ResultCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

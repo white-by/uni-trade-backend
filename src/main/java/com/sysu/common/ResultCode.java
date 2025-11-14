@@ -1,4 +1,4 @@
-package com.sysu.common.config;
+package com.sysu.common;
 
 public class ResultCode {
     public static final int SUCCESS = 1;        // 成功
