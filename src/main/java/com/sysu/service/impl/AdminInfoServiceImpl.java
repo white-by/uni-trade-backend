@@ -25,8 +25,27 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     public PageInfo<AdminInfo> getAdminInfoPage(int pageNum, int pageSize) {
         // 调用 PageHelper.startPage 开启分页
         PageHelper.startPage(pageNum, pageSize);
-        List<AdminInfo> list = adminInfoMapper.selectList(null); // 或你的查询条件
+        List<AdminInfo> list = adminInfoMapper.selectList(null);
+
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public int addAdminInfo(AdminInfo adminInfo) {
+        adminInfoMapper.insert(adminInfo);
+        return adminInfo.getAdminID();
+    }
+
+    @Override
+    public boolean updateAdminInfo(AdminInfo adminInfo) {
+        int rows = adminInfoMapper.updateById(adminInfo);
+        return rows > 0;
+    }
+
+    @Override
+    public boolean deleteAdminInfo(Integer adminID) {
+        int rows = adminInfoMapper.deleteById(adminID);
+        return rows > 0;
     }
 }
 

@@ -2,14 +2,13 @@ package com.sysu.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.sysu.common.Result;
-import com.sysu.dto.AdminListData;
 import com.sysu.entity.AdminInfo;
 import com.sysu.service.AdminInfoService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -19,19 +18,48 @@ public class AdminController {
     private AdminInfoService adminInfoService;
 
     @GetMapping("/adminInfo")
-    public Result<AdminListData> getAdminInfo(
+    public Result getAdminInfo(
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
         PageInfo<AdminInfo> pageInfo = adminInfoService.getAdminInfoPage(pageNum, pageSize);
 
-        // 封装 DTO
-        AdminListData data = new AdminListData();
-        data.setAdminList(pageInfo.getList());
-        data.setTotal((int) pageInfo.getTotal());
-        data.setPageNum(pageNum);
+        Map<String, Object> data = new HashMap<>();
+        data.put("total", pageInfo.getTotal());
+        data.put("pageNum", pageInfo.getPageNum());
+        data.put("adminList", pageInfo.getList());
 
         return Result.success(data);
+    }
+
+    @PostMapping("/adminInfo")
+    public Result addAdminInfo(@RequestBody AdminInfo adminInfo) {
+        int adminID = adminInfoService.addAdminInfo(adminInfo);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("adminID", adminID);
+
+        return Result.success(data);
+    }
+
+    @PutMapping("/adminInfo/{adminID}")
+    public Result updateAdminInfo(@PathVariable Integer adminID, @RequestBody AdminInfo adminInfo) {
+        adminInfo.setAdminID(adminID);
+
+        boolean ok = adminInfoService.updateAdminInfo(adminInfo);
+        if (!ok) {
+            return Result.error("管理员不存在");
+        }
+        return Result.success();
+    }
+
+    @DeleteMapping("/adminInfo/{adminID}")
+    public Result deleteAdminInfo(@PathVariable Integer adminID) {
+        boolean ok = adminInfoService.deleteAdminInfo(adminID);
+        if (!ok) {
+            return Result.error("管理员不存在或已删除");
+        }
+        return Result.success();
     }
 }
 

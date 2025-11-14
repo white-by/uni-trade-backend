@@ -10,4 +10,10 @@ import com.sysu.entity.AdminInfo;
 */
 public interface AdminInfoService {
     PageInfo<AdminInfo> getAdminInfoPage(int pageNum, int pageSize);
+
+    int addAdminInfo(AdminInfo adminInfo);
+
+    boolean updateAdminInfo(AdminInfo adminInfo);
+
+    boolean deleteAdminInfo(Integer adminID);
 }

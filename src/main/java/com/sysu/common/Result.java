@@ -11,41 +11,40 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Result<T> {
+public class Result {
     private Integer code;
     private String msg;
-    private T data;
+    private Object data;
 
     // 无数据成功返回
-    public static <T> Result<T> success() {
-        Result<T> result = new Result<>();
+    public static Result success() {
+        Result result = new Result();
         result.setCode(ResultCode.SUCCESS);
         result.setMsg("请求成功");
         return result;
     }
 
-    // 带数据返回
-    public static <T> Result<T> success(T data) {
-        Result<T> result = new Result<>();
-        result.setCode(ResultCode.SUCCESS);
-        result.setMsg("请求成功");
+    // 带数据成功返回
+    public static Result success(Object data) {
+        Result result = success();
         result.setData(data);
         return result;
     }
 
     // 无数据失败返回
-    public static <T> Result<T> error() {
-        Result<T> result = new Result<>();
+    public static Result error() {
+        Result result = new Result();
         result.setCode(ResultCode.ERROR);
         result.setMsg("系统错误");
         return result;
     }
 
     // 带信息失败返回
-    public static <T> Result<T> error(String msg) {
-        Result<T> result = new Result<>();
+    public static Result error(String msg) {
+        Result result = new Result();
         result.setCode(ResultCode.ERROR);
         result.setMsg(msg);
         return result;
     }
 }
+
