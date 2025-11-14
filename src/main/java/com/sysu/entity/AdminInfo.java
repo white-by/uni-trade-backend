@@ -56,4 +56,8 @@ public class AdminInfo {
      */
     @TableField(value = "age")
     private Integer age;
+
+    @TableField(exist = false)
+    private String token;
+
 }

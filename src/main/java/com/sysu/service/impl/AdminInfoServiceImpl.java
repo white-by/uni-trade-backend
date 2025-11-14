@@ -47,6 +47,21 @@ public class AdminInfoServiceImpl implements AdminInfoService {
         int rows = adminInfoMapper.deleteById(adminID);
         return rows > 0;
     }
+
+    @Override
+    public AdminInfo adminLogin(String mail, String password) {
+        // 根据邮箱查询
+        AdminInfo admin = adminInfoMapper.selectOne(
+                new com.baomidou.mybatisplus.core.conditions.query.QueryWrapper<AdminInfo>()
+                        .eq("mail", mail)
+        );
+
+        if (admin != null && admin.getPasswords().equals(password)) {
+            return admin;
+        }
+        return null;
+    }
+
 }
 
 

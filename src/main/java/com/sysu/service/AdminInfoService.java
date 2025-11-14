@@ -16,4 +16,6 @@ public interface AdminInfoService {
     boolean updateAdminInfo(AdminInfo adminInfo);
 
     boolean deleteAdminInfo(Integer adminID);
+
+    AdminInfo adminLogin(String mail, String password);
 }

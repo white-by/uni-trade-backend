@@ -21,3 +21,7 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
+
+jwt:
+  secret: "hJ8#tY2kLp9v!Q4sRm3Xz1Nw@eB7uG5a"
+  expiration: 86400000

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.sysu.common.Result;
 import com.sysu.entity.AdminInfo;
 import com.sysu.service.AdminInfoService;
+import com.sysu.utils.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,9 @@ public class AdminController {
 
     @Resource
     private AdminInfoService adminInfoService;
+
+    @Resource
+    private JwtUtil jwtUtil;
 
     @GetMapping("/adminInfo")
     public Result getAdminInfo(
@@ -61,5 +65,26 @@ public class AdminController {
         }
         return Result.success();
     }
+
+    @PostMapping("/login")
+    public Result adminLogin(@RequestBody Map<String, String> body) {
+        String mail = body.get("mail");
+        String password = body.get("password");
+
+        // 校验邮箱和密码
+        AdminInfo admin = adminInfoService.adminLogin(mail, password);
+        if (admin == null) {
+            return Result.error("邮箱或密码错误");
+        }
+
+        // 生成 token
+        String token = jwtUtil.createToken(admin.getAdminID().toString());
+
+        // 把 token 加到 admin 对象中
+        admin.setToken("Bearer " + token);
+
+        return Result.success(admin);
+    }
+
 }
 
