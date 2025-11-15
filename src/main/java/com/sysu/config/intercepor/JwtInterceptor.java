@@ -19,24 +19,27 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String header = request.getHeader("Authorization");
-        response.setContentType("application/json;charset=UTF-8");
 
-        if (header == null || !header.startsWith("Bearer ")) {
-            response.getWriter().write("{\"code\":" + ResultCode.TOKEN_EXPIRED + ",\"msg\":\"缺少或无效的Token\",\"data\":{}}");
-            return false;
-        }
+        return true;
 
-        String token = header.substring(7);
-        try {
-            String userId = jwtUtil.parseToken(token);
-            request.setAttribute("userId", userId);
-            return true;
-        } catch (JwtException e) {
-            // token过期或无效都统一返回 TOKEN_EXPIRED
-            response.getWriter().write("{\"code\":" + ResultCode.TOKEN_EXPIRED + ",\"msg\":\"Token已过期或无效\",\"data\":{}}");
-            return false;
-        }
+//        String header = request.getHeader("Authorization");
+//        response.setContentType("application/json;charset=UTF-8");
+//
+//        if (header == null || !header.startsWith("Bearer ")) {
+//            response.getWriter().write("{\"code\":" + ResultCode.TOKEN_EXPIRED + ",\"msg\":\"缺少或无效的Token\",\"data\":{}}");
+//            return false;
+//        }
+//
+//        String token = header.substring(7);
+//        try {
+//            String userId = jwtUtil.parseToken(token);
+//            request.setAttribute("userId", userId);
+//            return true;
+//        } catch (JwtException e) {
+//            // token过期或无效都统一返回 TOKEN_EXPIRED
+//            response.getWriter().write("{\"code\":" + ResultCode.TOKEN_EXPIRED + ",\"msg\":\"Token已过期或无效\",\"data\":{}}");
+//            return false;
+//        }
     }
 
 

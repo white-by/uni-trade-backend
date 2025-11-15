@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sysu.mapper.AdminInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.sysu.entity.AdminInfo">
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Admins">
             <id property="adminID" column="adminID" />
             <result property="passwords" column="passwords" />
             <result property="adminName" column="adminName" />

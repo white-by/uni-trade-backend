@@ -2,7 +2,7 @@ package com.sysu.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.sysu.common.Result;
-import com.sysu.entity.AdminInfo;
+import com.sysu.entity.Admins;
 import com.sysu.service.AdminInfoService;
 import com.sysu.utils.JwtUtil;
 import jakarta.annotation.Resource;
@@ -23,10 +23,11 @@ public class AdminController {
 
     @GetMapping("/adminInfo")
     public Result getAdminInfo(
+            @RequestParam(required = false) String searchQuery,
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        PageInfo<AdminInfo> pageInfo = adminInfoService.getAdminInfoPage(pageNum, pageSize);
+        PageInfo<Admins> pageInfo = adminInfoService.getAdminInfoPage(searchQuery, pageNum, pageSize);
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", pageInfo.getTotal());
@@ -37,8 +38,8 @@ public class AdminController {
     }
 
     @PostMapping("/adminInfo")
-    public Result addAdminInfo(@RequestBody AdminInfo adminInfo) {
-        int adminID = adminInfoService.addAdminInfo(adminInfo);
+    public Result addAdminInfo(@RequestBody Admins admins) {
+        int adminID = adminInfoService.addAdminInfo(admins);
 
         Map<String, Object> data = new HashMap<>();
         data.put("adminID", adminID);
@@ -47,10 +48,10 @@ public class AdminController {
     }
 
     @PutMapping("/adminInfo/{adminID}")
-    public Result updateAdminInfo(@PathVariable Integer adminID, @RequestBody AdminInfo adminInfo) {
-        adminInfo.setAdminID(adminID);
+    public Result updateAdminInfo(@PathVariable Integer adminID, @RequestBody Admins admins) {
+        admins.setAdminID(adminID);
 
-        boolean ok = adminInfoService.updateAdminInfo(adminInfo);
+        boolean ok = adminInfoService.updateAdminInfo(admins);
         if (!ok) {
             return Result.error("管理员不存在");
         }
@@ -72,7 +73,7 @@ public class AdminController {
         String password = body.get("password");
 
         // 校验邮箱和密码
-        AdminInfo admin = adminInfoService.adminLogin(mail, password);
+        Admins admin = adminInfoService.adminLogin(mail, password);
         if (admin == null) {
             return Result.error("邮箱或密码错误");
         }

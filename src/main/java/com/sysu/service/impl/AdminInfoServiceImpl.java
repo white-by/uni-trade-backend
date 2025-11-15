@@ -1,8 +1,9 @@
 package com.sysu.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sysu.entity.AdminInfo;
+import com.sysu.entity.Admins;
 import com.sysu.service.AdminInfoService;
 import com.sysu.mapper.AdminInfoMapper;
 import jakarta.annotation.Resource;
@@ -22,23 +23,30 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     private AdminInfoMapper adminInfoMapper;
 
     @Override
-    public PageInfo<AdminInfo> getAdminInfoPage(int pageNum, int pageSize) {
+    public PageInfo<Admins> getAdminInfoPage(String searchQuery, int pageNum, int pageSize) {
         // 调用 PageHelper.startPage 开启分页
         PageHelper.startPage(pageNum, pageSize);
-        List<AdminInfo> list = adminInfoMapper.selectList(null);
+
+        // 如果 searchQuery 有值，则按 adminName 模糊查询
+        QueryWrapper<Admins> wrapper = new QueryWrapper<>();
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            wrapper.like("adminName", searchQuery);
+        }
+
+        List<Admins> list = adminInfoMapper.selectList(wrapper);
 
         return new PageInfo<>(list);
     }
 
     @Override
-    public int addAdminInfo(AdminInfo adminInfo) {
-        adminInfoMapper.insert(adminInfo);
-        return adminInfo.getAdminID();
+    public int addAdminInfo(Admins admins) {
+        adminInfoMapper.insert(admins);
+        return admins.getAdminID();
     }
 
     @Override
-    public boolean updateAdminInfo(AdminInfo adminInfo) {
-        int rows = adminInfoMapper.updateById(adminInfo);
+    public boolean updateAdminInfo(Admins admins) {
+        int rows = adminInfoMapper.updateById(admins);
         return rows > 0;
     }
 
@@ -49,10 +57,10 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public AdminInfo adminLogin(String mail, String password) {
+    public Admins adminLogin(String mail, String password) {
         // 根据邮箱查询
-        AdminInfo admin = adminInfoMapper.selectOne(
-                new com.baomidou.mybatisplus.core.conditions.query.QueryWrapper<AdminInfo>()
+        Admins admin = adminInfoMapper.selectOne(
+                new com.baomidou.mybatisplus.core.conditions.query.QueryWrapper<Admins>()
                         .eq("mail", mail)
         );
 

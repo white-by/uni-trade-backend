@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="admins")
 @Data
-public class AdminInfo {
+public class Admins {
     /**
      * 
      */

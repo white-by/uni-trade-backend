@@ -1,7 +1,7 @@
 package com.sysu.service;
 
 import com.github.pagehelper.PageInfo;
-import com.sysu.entity.AdminInfo;
+import com.sysu.entity.Admins;
 
 /**
 * @author whiteby
@@ -9,13 +9,13 @@ import com.sysu.entity.AdminInfo;
 * @createDate 2025-11-13 20:13:40
 */
 public interface AdminInfoService {
-    PageInfo<AdminInfo> getAdminInfoPage(int pageNum, int pageSize);
+    PageInfo<Admins> getAdminInfoPage(String searchQuery, int pageNum, int pageSize);
 
-    int addAdminInfo(AdminInfo adminInfo);
+    int addAdminInfo(Admins admins);
 
-    boolean updateAdminInfo(AdminInfo adminInfo);
+    boolean updateAdminInfo(Admins admins);
 
     boolean deleteAdminInfo(Integer adminID);
 
-    AdminInfo adminLogin(String mail, String password);
+    Admins adminLogin(String mail, String password);
 }
