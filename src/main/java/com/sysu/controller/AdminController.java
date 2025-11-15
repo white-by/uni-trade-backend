@@ -3,7 +3,7 @@ package com.sysu.controller;
 import com.github.pagehelper.PageInfo;
 import com.sysu.common.Result;
 import com.sysu.entity.Admins;
-import com.sysu.service.AdminInfoService;
+import com.sysu.service.AdminService;
 import com.sysu.utils.JwtUtil;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class AdminController {
 
     @Resource
-    private AdminInfoService adminInfoService;
+    private AdminService adminInfoService;
 
     @Resource
     private JwtUtil jwtUtil;
@@ -27,12 +27,12 @@ public class AdminController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        PageInfo<Admins> pageInfo = adminInfoService.getAdminInfoPage(searchQuery, pageNum, pageSize);
+        PageInfo<Admins> page = adminInfoService.getAdminPage(searchQuery, pageNum, pageSize);
 
         Map<String, Object> data = new HashMap<>();
-        data.put("total", pageInfo.getTotal());
-        data.put("pageNum", pageInfo.getPageNum());
-        data.put("adminList", pageInfo.getList());
+        data.put("total", page.getTotal());
+        data.put("pageNum", page.getPageNum());
+        data.put("adminList", page.getList());
 
         return Result.success(data);
     }

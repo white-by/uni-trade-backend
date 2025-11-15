@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sysu.entity.Admins;
-import com.sysu.service.AdminInfoService;
+import com.sysu.service.AdminService;
 import com.sysu.mapper.AdminInfoMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -17,13 +17,13 @@ import java.util.List;
 * @createDate 2025-11-13 20:13:40
 */
 @Service
-public class AdminInfoServiceImpl implements AdminInfoService {
+public class AdminServiceImpl implements AdminService {
 
     @Resource
     private AdminInfoMapper adminInfoMapper;
 
     @Override
-    public PageInfo<Admins> getAdminInfoPage(String searchQuery, int pageNum, int pageSize) {
+    public PageInfo<Admins> getAdminPage(String searchQuery, int pageNum, int pageSize) {
         // 调用 PageHelper.startPage 开启分页
         PageHelper.startPage(pageNum, pageSize);
 

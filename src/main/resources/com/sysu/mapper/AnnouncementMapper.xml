@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.AnnouncementMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Announcement">
+            <id property="announcementID" column="announcementID" />
+            <result property="anTitle" column="anTitle" />
+            <result property="anContent" column="anContent" />
+            <result property="anTime" column="anTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        announcementID,anTitle,anContent,anTime
+    </sql>
+</mapper>
