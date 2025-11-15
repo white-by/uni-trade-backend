@@ -40,7 +40,7 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
 
     @Override
     public int addAnnouncement(Announcement announcement) {
-        announcement.setAnTime(new Date());
+        announcement.setAnTime(new Date());  // 当前时间
         announcementMapper.insert(announcement);
         return announcement.getAnnouncementID();
     }

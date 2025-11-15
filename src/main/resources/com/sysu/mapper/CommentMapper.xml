@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Comment">
+            <id property="commentID" column="commentID" />
+            <result property="goodsID" column="goodsID" />
+            <result property="commentatorID" column="commentatorID" />
+            <result property="commentContent" column="commentContent" />
+            <result property="commentTime" column="commentTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        commentID,goodsID,commentatorID,commentContent,commentTime
+    </sql>
+
+    <select id="selectComment" resultType="com.sysu.entity.Comment">
+        SELECT
+        c.*,
+        u.userName AS commentatorName,
+        g.goodsName AS goodsName
+        FROM comment c
+        LEFT JOIN users u ON c.commentatorID = u.userID
+        LEFT JOIN goods g ON c.goodsID = g.goodsID
+        <where>
+            <if test="searchQuery != null and searchQuery.trim() != ''">
+                (
+                u.userName LIKE CONCAT('%', #{searchQuery}, '%')
+                OR
+                g.goodsName LIKE CONCAT('%', #{searchQuery}, '%')
+                )
+            </if>
+        </where>
+    </select>
+
+</mapper>
