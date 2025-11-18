@@ -1,6 +1,6 @@
 package com.sysu.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sysu.common.Result;
 import com.sysu.entity.Comment;
 import com.sysu.service.CommentService;
@@ -21,12 +21,12 @@ public class CommentController {
       @RequestParam(defaultValue = "1") Integer pageNum,
       @RequestParam(defaultValue = "10") Integer pageSize
     ){
-        PageInfo<Comment> page = commentService.getCommentPage(searchQuery, pageNum, pageSize);
+        IPage<Comment> page = commentService.getCommentPage(searchQuery, pageNum, pageSize);
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", page.getTotal());
-        data.put("pageNum", page.getPageNum());
-        data.put("commentList", page.getList());
+        data.put("pageNum", page.getCurrent());
+        data.put("commentList", page.getRecords());
 
         return Result.success(data);
     }

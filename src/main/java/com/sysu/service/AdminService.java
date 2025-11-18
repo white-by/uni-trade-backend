@@ -1,7 +1,7 @@
 package com.sysu.service;
 
-import com.github.pagehelper.PageInfo;
-import com.sysu.entity.Admins;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sysu.entity.Admin;
 
 /**
 * @author whiteby
@@ -9,13 +9,13 @@ import com.sysu.entity.Admins;
 * @createDate 2025-11-13 20:13:40
 */
 public interface AdminService {
-    PageInfo<Admins> getAdminPage(String searchQuery, int pageNum, int pageSize);
+    Page<Admin> getAdminPage(String searchQuery, int pageNum, int pageSize);
 
-    int addAdminInfo(Admins admins);
+    int addAdminInfo(Admin admin);
 
-    boolean updateAdminInfo(Admins admins);
+    boolean updateAdminInfo(Admin admin);
 
     boolean deleteAdminInfo(Integer adminID);
 
-    Admins adminLogin(String mail, String password);
+    Admin adminLogin(String mail, String password);
 }

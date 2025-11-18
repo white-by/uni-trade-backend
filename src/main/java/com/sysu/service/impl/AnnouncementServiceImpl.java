@@ -1,9 +1,8 @@
 package com.sysu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.sysu.entity.Announcement;
 import com.sysu.service.AnnouncementService;
 import com.sysu.mapper.AnnouncementMapper;
@@ -11,7 +10,6 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 /**
 * @author whiteby
@@ -25,17 +23,15 @@ public class AnnouncementServiceImpl extends ServiceImpl<AnnouncementMapper, Ann
     private AnnouncementMapper announcementMapper;
 
     @Override
-    public PageInfo<Announcement> getAnnouncementPage(String searchQuery, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+    public Page<Announcement> getAnnouncementPage(String searchQuery, Integer pageNum, Integer pageSize) {
+        Page<Announcement> page = new Page<>(pageNum, pageSize);
 
         QueryWrapper<Announcement> wrapper = new QueryWrapper<>();
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
             wrapper.like("anTitle", searchQuery);
         }
 
-        List<Announcement> list = announcementMapper.selectList(wrapper);
-
-        return new PageInfo<>(list);
+        return announcementMapper.selectPage(page, wrapper);
     }
 
     @Override

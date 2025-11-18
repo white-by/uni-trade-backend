@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.User">
+            <id property="userID" column="userID" />
+            <result property="userName" column="userName" />
+            <result property="passwords" column="passwords" />
+            <result property="schoolID" column="schoolID" />
+            <result property="picture" column="picture" />
+            <result property="tel" column="tel" />
+            <result property="mail" column="mail" />
+            <result property="gender" column="gender" />
+            <result property="userStatus" column="userStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        userID,userName,passwords,schoolID,picture,tel,
+        mail,gender,userStatus
+    </sql>
+</mapper>

@@ -1,6 +1,6 @@
 package com.sysu.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sysu.common.Result;
 import com.sysu.entity.Announcement;
 import com.sysu.service.AnnouncementService;
@@ -21,12 +21,12 @@ public class AnnouncementController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        PageInfo<Announcement> page = announcementService.getAnnouncementPage(searchQuery, pageNum, pageSize);
+        Page<Announcement> page = announcementService.getAnnouncementPage(searchQuery, pageNum, pageSize);
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", page.getTotal());
-        data.put("pageNum", page.getPageNum());
-        data.put("announcementList", page.getList());
+        data.put("pageNum", page.getCurrent());
+        data.put("announcementList", page.getRecords());
 
         return Result.success(data);
     }

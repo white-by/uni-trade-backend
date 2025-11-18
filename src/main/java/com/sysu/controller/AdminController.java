@@ -1,8 +1,8 @@
 package com.sysu.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sysu.common.Result;
-import com.sysu.entity.Admins;
+import com.sysu.entity.Admin;
 import com.sysu.service.AdminService;
 import com.sysu.utils.JwtUtil;
 import jakarta.annotation.Resource;
@@ -27,19 +27,19 @@ public class AdminController {
             @RequestParam(defaultValue = "1") Integer pageNum,
             @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        PageInfo<Admins> page = adminInfoService.getAdminPage(searchQuery, pageNum, pageSize);
+        Page<Admin> page = adminInfoService.getAdminPage(searchQuery, pageNum, pageSize);
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", page.getTotal());
-        data.put("pageNum", page.getPageNum());
-        data.put("adminList", page.getList());
+        data.put("pageNum", page.getCurrent());
+        data.put("adminList", page.getRecords());
 
         return Result.success(data);
     }
 
     @PostMapping("/adminInfo")
-    public Result addAdminInfo(@RequestBody Admins admins) {
-        int adminID = adminInfoService.addAdminInfo(admins);
+    public Result addAdminInfo(@RequestBody Admin admin) {
+        int adminID = adminInfoService.addAdminInfo(admin);
 
         Map<String, Object> data = new HashMap<>();
         data.put("adminID", adminID);
@@ -48,10 +48,10 @@ public class AdminController {
     }
 
     @PutMapping("/adminInfo/{adminID}")
-    public Result updateAdminInfo(@PathVariable Integer adminID, @RequestBody Admins admins) {
-        admins.setAdminID(adminID);
+    public Result updateAdminInfo(@PathVariable Integer adminID, @RequestBody Admin admin) {
+        admin.setAdminID(adminID);
 
-        boolean ok = adminInfoService.updateAdminInfo(admins);
+        boolean ok = adminInfoService.updateAdminInfo(admin);
         if (!ok) {
             return Result.error("管理员不存在");
         }
@@ -73,7 +73,7 @@ public class AdminController {
         String password = body.get("password");
 
         // 校验邮箱和密码
-        Admins admin = adminInfoService.adminLogin(mail, password);
+        Admin admin = adminInfoService.adminLogin(mail, password);
         if (admin == null) {
             return Result.error("邮箱或密码错误");
         }

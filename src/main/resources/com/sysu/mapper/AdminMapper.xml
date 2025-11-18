@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sysu.mapper.AdminInfoMapper">
+<mapper namespace="com.sysu.mapper.AdminMapper">
 
-    <resultMap id="BaseResultMap" type="com.sysu.entity.Admins">
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Admin">
             <id property="adminID" column="adminID" />
             <result property="passwords" column="passwords" />
             <result property="adminName" column="adminName" />

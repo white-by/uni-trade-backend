@@ -1,6 +1,6 @@
 package com.sysu.service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sysu.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface CommentService extends IService<Comment> {
 
-    PageInfo<Comment> getCommentPage(String searchQuery, Integer pageNum, Integer pageSize);
+    IPage<Comment> getCommentPage(String searchQuery, Integer pageNum, Integer pageSize);
 
     boolean deleteComment(Integer commentID);
 }

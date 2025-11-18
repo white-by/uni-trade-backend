@@ -1,6 +1,6 @@
 package com.sysu.service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sysu.entity.Announcement;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface AnnouncementService extends IService<Announcement> {
 
-    PageInfo<Announcement> getAnnouncementPage(String searchQuery, Integer pageNum, Integer pageSize);
+    Page<Announcement> getAnnouncementPage(String searchQuery, Integer pageNum, Integer pageSize);
 
     int addAnnouncement(Announcement announcement);
 
