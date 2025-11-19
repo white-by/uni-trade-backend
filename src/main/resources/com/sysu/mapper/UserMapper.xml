@@ -20,4 +20,15 @@
         userID,userName,passwords,schoolID,picture,tel,
         mail,gender,userStatus
     </sql>
+
+    <select id="selectUser" resultType="com.sysu.entity.User">
+        select u.*, s.schoolName
+        from users u
+        left join school s on u.schoolID = s.schoolID
+        <where>
+            <if test="searchQuery != null and searchQuery.trim() != ''">
+                and u.userName like concat('%', #{searchQuery}, '%')
+            </if>
+        </where>
+    </select>
 </mapper>

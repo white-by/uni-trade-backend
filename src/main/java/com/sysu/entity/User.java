@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
@@ -29,6 +30,7 @@ public class User {
      * 
      */
     @TableField(value = "passwords")
+    @JsonProperty("password")
     private String passwords;
 
     /**
@@ -65,5 +67,10 @@ public class User {
      * 
      */
     @TableField(value = "userStatus")
+    @JsonProperty("status")
     private Integer userStatus;
+
+    @TableField(exist = false)
+    private String schoolName;
+
 }

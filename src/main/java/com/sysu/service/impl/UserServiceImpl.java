@@ -1,6 +1,5 @@
 package com.sysu.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sysu.entity.User;
@@ -25,12 +24,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Page<User> getUserPage(String searchQuery, Integer pageNum, Integer pageSize) {
         Page<User> page = new Page<>(pageNum, pageSize);
 
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            wrapper.like("username", searchQuery);
-        }
+        return userMapper.selectUser(page, searchQuery);
+    }
 
-        return userMapper.selectPage(page, wrapper);
+    @Override
+    public int addUser(User user) {
+        userMapper.insert(user);
+        return user.getUserID();
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        int rows = userMapper.updateById(user);
+        return rows > 0;
+    }
+
+    @Override
+    public boolean deleteUser(Integer userID) {
+        int rows = userMapper.deleteById(userID);
+        return rows > 0;
     }
 }
 

@@ -12,4 +12,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     Page<User> getUserPage(String searchQuery, Integer pageNum, Integer pageSize);
+
+    int addUser(User user);
+
+    boolean updateUser(User user);
+
+    boolean deleteUser(Integer userID);
 }
