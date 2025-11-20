@@ -9,5 +9,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-11-13 17:32:27
 */
 public interface AddressService extends IService<Address> {
-
+    public Address getAddressById(Integer addrID);
 }

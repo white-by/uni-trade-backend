@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Goods">
+            <id property="goodsID" column="goodsID" />
+            <result property="goodsName" column="goodsName" />
+            <result property="userID" column="userID" />
+            <result property="price" column="price" />
+            <result property="categoryID" column="categoryID" />
+            <result property="details" column="details" />
+            <result property="isSold" column="isSold" />
+            <result property="goodsImages" column="goodsImages" />
+            <result property="createdTime" column="createdTime" />
+            <result property="deliveryMethod" column="deliveryMethod" />
+            <result property="shippingCost" column="shippingCost" />
+            <result property="addrID" column="addrID" />
+            <result property="view" column="view" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        goodsID,goodsName,userID,price,categoryID,details,
+        isSold,goodsImages,createdTime,deliveryMethod,shippingCost,
+        addrID,view
+    </sql>
+</mapper>
