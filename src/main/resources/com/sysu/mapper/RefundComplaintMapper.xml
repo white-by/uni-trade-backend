@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.RefundComplaintMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.RefundComplaint">
+        <id property="complaintID" column="complaintID" />
+        <result property="tradeID" column="complaintTradeID" />
+        <result property="sellerReason" column="sellerReason" />
+        <result property="cTime" column="cTime" />
+        <result property="cStatus" column="cStatus" />
+        <result property="buyerReason" column="buyerReason"/>
+
+        <result property="goodsName" column="goodsName"/>
+        <result property="price" column="price"/>
+        <result property="shippingCost" column="shippingCost"/>
+        <result property="sellerName" column="sellerName"/>
+        <result property="buyerName" column="buyerName"/>
+        <result property="orderTime" column="orderTime"/>
+        <result property="payTime" column="payTime"/>
+        <result property="sellerID" column="sellerID"/>
+        <result property="buyerID" column="buyerID"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        r.complaintID,
+        r.tradeID AS complaintTradeID,
+        r.sellerReason,
+        r.cTime,
+        r.cStatus,
+        r.buyerReason,
+        g.goodsName,
+        g.price,
+        g.shippingCost,
+        su.userName AS sellerName,
+        bu.userName AS buyerName,
+        t.orderTime,
+        t.payTime,
+        t.sellerID,
+        t.buyerID
+    </sql>
+
+    <select id="selectRefundListPage" resultType="com.sysu.entity.RefundComplaint">
+        SELECT
+<!--        <include refid="Base_Column_List"/>-->
+        r.complaintID,
+        r.tradeID,
+        r.sellerReason,
+        r.cTime,
+        r.cStatus,
+        r.buyerReason,
+        g.goodsName,
+        g.price,
+        g.shippingCost,
+        su.userName AS sellerName,
+        bu.userName AS buyerName,
+        t.orderTime,
+        t.payTime,
+        t.sellerID,
+        t.buyerID
+        FROM refund_complaint r
+        LEFT JOIN trade_records t ON r.tradeID = t.tradeID
+        LEFT JOIN goods g ON t.goodsID = g.goodsID
+        LEFT JOIN users su ON t.sellerID = su.userID
+        LEFT JOIN users bu ON t.buyerID = bu.userID
+        WHERE r.cStatus = #{status}
+        <if test="searchQuery != null and searchQuery != ''">
+            AND t.tradeID LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        ORDER BY r.cTime DESC
+    </select>
+</mapper>
