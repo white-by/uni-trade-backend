@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sysu.mapper.GoodsMapper">
+
+    <resultMap id="BaseResultMap" type="com.sysu.entity.Goods">
+            <id property="goodsID" column="goodsID" />
+            <result property="goodsName" column="goodsName" />
+            <result property="userID" column="userID" />
+            <result property="price" column="price" />
+            <result property="categoryID" column="categoryID" />
+            <result property="details" column="details" />
+            <result property="isSold" column="isSold" />
+            <result property="goodsImages" column="goodsImages" />
+            <result property="createdTime" column="createdTime" />
+            <result property="deliveryMethod" column="deliveryMethod" />
+            <result property="shippingCost" column="shippingCost" />
+            <result property="addrID" column="addrID" />
+            <result property="view" column="view" />
+            <!-- 扩展字段 -->
+            <result property="userName" column="userName"/>
+            <result property="category" column="category"/>
+            <result property="description" column="description"/>
+            <result property="province" column="province"/>
+            <result property="city" column="city"/>
+            <result property="area" column="area"/>
+            <result property="detailArea" column="detailArea"/>
+            <result property="stars" column="stars"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        goodsID,goodsName,userID,price,categoryID,details,
+        isSold,goodsImages,createdTime,deliveryMethod,shippingCost,
+        addrID,view
+    </sql>
+    <select id="selectGoodsPage" resultType="com.sysu.entity.Goods">
+        SELECT
+        g.goodsID,
+        g.goodsName,
+        g.userID,
+        g.price,
+        g.categoryID,
+        g.details,
+        g.isSold,
+        g.goodsImages,
+        g.createdTime,
+        g.deliveryMethod,
+        g.shippingCost,
+        g.addrID,
+        g.view,
+        u.userName,
+        c.categoryName AS category,
+        c.descriptions AS description,
+        a.province,
+        a.city,
+        a.districts AS area,
+        a.address AS detailArea,
+        IFNULL(starCount.count,0) AS stars
+        FROM goods g
+        LEFT JOIN users u ON g.userID = u.userID
+        LEFT JOIN category c ON g.categoryID = c.categoryID
+        LEFT JOIN address a ON g.addrID = a.addrID
+        LEFT JOIN (
+        SELECT goodsID, COUNT(*) AS count
+        FROM collection
+        GROUP BY goodsID
+        ) starCount ON g.goodsID = starCount.goodsID
+        <where>
+            <if test="searchQuery != null and searchQuery != ''">
+                g.goodsID = #{searchQuery}
+            </if>
+        </where>
+        ORDER BY g.createdTime DESC
+    </select>
+</mapper>
